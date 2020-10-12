@@ -1,0 +1,14 @@
+---
+- name: Inventory
+  hosts: private_subnet
+  vars:
+    - ansible_ssh_user: "example"
+    - ansible_ssh_common_args: >
+          -o ProxyCommand="ssh -W %h:%p -q {{ ansible_ssh_user }}@{{ bastion_ip }}" \
+          -o ServerAliveInterval=5 \
+          -o StrictHostKeyChecking=no
+  gather_facts: False
+  become: true
+  roles:
+   - { role: common }
+   - { role: docker }

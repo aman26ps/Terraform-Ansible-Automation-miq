@@ -1,0 +1,42 @@
+---
+- name: install docker
+  yum:
+    name='docker'
+    state=latest
+
+- name: service docker
+  service:
+    name=docker
+    state=started
+    enabled=yes
+
+- name: install python
+  yum:
+    name='python2'
+    state=latest
+
+- name: install pip
+  shell: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py
+
+- name: install certain python modules for docker
+  shell: pip install docker-py
+  become: true
+
+- name: Install Nginx
+  docker_container:
+    name: nginx
+    image: nginx
+    detach: True
+    ports:
+    - "8080:8080"
+    expose:
+    - "8080"
+
+- name: copying index.html
+  copy:
+    src: /home/ec2-user/test/ansible/templates/index.html
+    dest: /tmp/index.html
+
+- name: copying hello docker file
+  shell: docker cp /tmp/index.html nginx:/usr/share/nginx/html/index.html
+  become: true
