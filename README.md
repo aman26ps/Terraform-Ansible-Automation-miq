@@ -21,7 +21,7 @@ ansible 2.7.9
   ansible python module location = /usr/lib/python2.7/site-packages/ansible
   executable location = /bin/ansible
   python version = 2.7.18 (default, Aug 27 2020, 21:22:52) [GCC 7.3.1 20180712 (Red Hat 7.3.1-9)]
-``
+```
 * OS used for triggering ansible and terraform scripts
 
 ```sh
